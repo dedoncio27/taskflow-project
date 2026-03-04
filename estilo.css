@@ -311,3 +311,9 @@ footer{
     background-color: red;
 
 }
+
+input::placeholder {
+    color: #000000; /* Aquí pones el color que quieras */
+    opacity: 1;     /* Importante: Firefox le baja la opacidad por defecto */
+    font-style: italic; /* Opcional: le da un toque más elegante */
+}
