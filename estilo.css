@@ -478,8 +478,8 @@
             background-color: var(--color-nav);
             box-shadow: 2px 2px 4px var(--color-black);
             height: 10vh;
-            margin-left: 5%;
-            margin-right: 5%;
+            margin-left: 2%;
+            margin-right: 2%;
             color: var(--color-titulo-principal);
             padding: 2px;
         }
@@ -500,7 +500,7 @@
             max-height: 30%;
         }
         .textoDefault{
-            font-size:smaller;
+            font-size:x-small;
         }
         .titulo{
             font-size: medium;
@@ -509,7 +509,7 @@
             background: linear-gradient(to right, var(--color-base), var(--color-destenido));
             border: 0;
             border-radius: 8px; 
-            font-size: small;
+            font-size:x-small;
             width: 10vh;
         }
         .contenedorLibro{
@@ -532,7 +532,7 @@
         }
         .imgLibro{
             max-height: 20%;
-            max-width: 40%;
+            max-width: 30%;
         }
     }
 }
