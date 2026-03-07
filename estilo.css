@@ -64,6 +64,7 @@
     --modo-dark:inline;
 }
 
+
 @layer base{
     body{
         background: linear-gradient(to bottom,var(--color-base), var(--color-destenido));
@@ -468,6 +469,38 @@
     }
     .dark .btnOscuro::before{
         content: "Modo claro☀️";
+    }
+    @media (max-width: 1281px) {
+        .infoLibro {
+            display: block;
+            width: 100%;
+        }
+        aside {
+            position:static; /* Cambiado de block que no existe en position */
+            top: 20px;
+            margin-bottom: 5%;
+        }
+        .contenedorBotones {
+            max-width: 90%; /* Ajustado para móviles */
+        
+        }
+        .contenedorLibro{
+        margin-top: 5px;
+        margin-bottom: 5px;
+        justify-content: center;
+        justify-self: center;
+        justify-items: center;
+        align-items: center;
+        width: 40%;
+        height: 30vh;
+        perspective: 1500px;
+        }
+        .imgLibro{
+            max-height: 30%;
+        }
+        .textoDefault{
+            font-size: large ;
+        }
     }
 }
 
