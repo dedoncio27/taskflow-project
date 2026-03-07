@@ -589,35 +589,69 @@
   .dark .btnOscuro::before {
     content: "Modo claro☀️";
   }
-  @media (max-width: 1281px) {
+  @media (max-width: 1300px) {
+    nav {
+      display: flex;
+      justify-content: center;
+      border-radius: 60px;
+      background-color: var(--color-nav);
+      box-shadow: 2px 2px 4px var(--color-black);
+      height: 10vh;
+      margin-left: 5%;
+      margin-right: 5%;
+      color: var(--color-titulo-principal);
+      padding: 2px;
+    }
     .infoLibro {
       display: block;
       width: 100%;
     }
     aside {
-      position: static;
+      position: relative;
       top: 20px;
-      margin-bottom: 5%;
+      margin-bottom: 15%;
     }
     .contenedorBotones {
       max-width: 90%;
+      margin: 0 auto;
+    }
+    .imgLibro {
+      max-height: 30%;
+    }
+    .textoDefault {
+      font-size: small;
+    }
+    .titulo {
+      font-size: medium;
+    }
+    .botonesNav {
+      background: linear-gradient(to right, var(--color-base), var(--color-destenido));
+      border: 0;
+      border-radius: 8px;
+      font-size: small;
+      width: 10vh;
     }
     .contenedorLibro {
+      position: static;
       margin-top: 5px;
       margin-bottom: 5px;
       justify-content: center;
       justify-self: center;
       justify-items: center;
       align-items: center;
-      width: 40%;
-      height: 30vh;
+      width: 50%;
+      height: 50vh;
       perspective: 1500px;
     }
-    .imgLibro {
-      max-height: 30%;
+    .libro {
+      width: 100%;
+      height: 100%;
+      position: fixed;
+      transform-style: preserve-3d;
     }
-    .textoDefault {
-      font-size: large;
+    .imgLibro {
+      max-height: 20%;
+      max-width: 50%;
     }
   }
 }

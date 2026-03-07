@@ -470,54 +470,70 @@
     .dark .btnOscuro::before{
         content: "Modo claro☀️";
     }
-    @media (max-width: 1281px) {
+    @media (max-width: 1300px) {
         nav{
             display: flex;
-            justify-content:space-around;
+            justify-content:center;
             border-radius: 60px;
             background-color: var(--color-nav);
             box-shadow: 2px 2px 4px var(--color-black);
-            max-height: 10%;
+            height: 10vh;
             margin-left: 5%;
             margin-right: 5%;
             color: var(--color-titulo-principal);
+            padding: 2px;
         }
         .infoLibro {
             display: block;
             width: 100%;
         }
         aside {
-            position:static; /* Cambiado de block que no existe en position */
+            position:relative; /* Cambiado de block que no existe en position */
             top: 20px;
-            margin-bottom: 5%;
+            margin-bottom: 15%;
         }
         .contenedorBotones {
             max-width: 90%; /* Ajustado para móviles */
-            height: 80vh;
-        }
-        .contenedorLibro{
-        margin-top: 5px;
-        margin-bottom: 5px;
-        justify-content: center;
-        justify-self: center;
-        justify-items: center;
-        align-items: center;
-        width: 50%;
-        height: 30vh;
-        perspective: 1500px;
+            margin: 0 auto;
         }
         .imgLibro{
             max-height: 30%;
         }
         .textoDefault{
-            font-size: large ;
+            font-size: small ;
+        }
+        .titulo{
+            font-size: medium;
         }
         .botonesNav{
-        background: linear-gradient(to right, var(--color-base), var(--color-destenido));
-        border: 0;
-        border-radius: 8px; 
-        margin: 2%;
-    }
+            background: linear-gradient(to right, var(--color-base), var(--color-destenido));
+            border: 0;
+            border-radius: 8px; 
+            font-size: small;
+            width: 10vh;
+        }
+        .contenedorLibro{
+            position:static;
+            margin-top: 5px;
+            margin-bottom: 5px;
+            justify-content: center;
+            justify-self: center;
+            justify-items: center;
+            align-items: center;
+            width: 50%;
+            height: 50vh;
+            perspective: 1500px;
+        }
+        .libro{
+            width: 100%;       
+            height: 100%;      
+            position:fixed;
+            transform-style: preserve-3d;
+        }
+        .imgLibro{
+            max-height: 20%;
+            max-width: 50%;
+        }
     }
 }
 
