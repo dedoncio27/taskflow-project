@@ -471,6 +471,17 @@
         content: "Modo claro☀️";
     }
     @media (max-width: 1281px) {
+        nav{
+            display: flex;
+            justify-content:space-around;
+            border-radius: 60px;
+            background-color: var(--color-nav);
+            box-shadow: 2px 2px 4px var(--color-black);
+            max-height: 10%;
+            margin-left: 5%;
+            margin-right: 5%;
+            color: var(--color-titulo-principal);
+        }
         .infoLibro {
             display: block;
             width: 100%;
@@ -482,7 +493,7 @@
         }
         .contenedorBotones {
             max-width: 90%; /* Ajustado para móviles */
-        
+            height: 80vh;
         }
         .contenedorLibro{
         margin-top: 5px;
@@ -491,7 +502,7 @@
         justify-self: center;
         justify-items: center;
         align-items: center;
-        width: 40%;
+        width: 50%;
         height: 30vh;
         perspective: 1500px;
         }
@@ -501,6 +512,12 @@
         .textoDefault{
             font-size: large ;
         }
+        .botonesNav{
+        background: linear-gradient(to right, var(--color-base), var(--color-destenido));
+        border: 0;
+        border-radius: 8px; 
+        margin: 2%;
+    }
     }
 }
 
