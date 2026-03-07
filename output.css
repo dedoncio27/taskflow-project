@@ -619,7 +619,7 @@
       max-height: 30%;
     }
     .textoDefault {
-      font-size: small;
+      font-size: smaller;
     }
     .titulo {
       font-size: medium;
@@ -651,7 +651,7 @@
     }
     .imgLibro {
       max-height: 20%;
-      max-width: 50%;
+      max-width: 40%;
     }
   }
 }
