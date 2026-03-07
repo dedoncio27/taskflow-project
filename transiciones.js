@@ -1,263 +1,57 @@
-const defaultInfoOlimpo = document.getElementById("sectionInfoOlimpo");
+const misPaginas = [
+    document.querySelector(".paginaPortada"), 
+    document.querySelector(".paginaIndex"),   
+    document.querySelector(".paginaZeus"),    
+    document.querySelector(".paginaHera"),    
+    document.querySelector(".paginaPoseidon"),
+    document.querySelector(".paginaApolo"),
+    document.querySelector(".paginaDemeter"),
+    document.querySelector(".paginaArtemisa"),
+    document.querySelector(".paginaAres"),
+    document.querySelector(".paginaHermes"),
+    document.querySelector(".paginaAtenea"),
+    document.querySelector(".paginaAfrodita"),
+    document.querySelector(".paginaHefesto"),
+    document.querySelector(".paginaHestia")
+];
 
-const botonOtros = document.getElementById("botonOtros")
+function irAPagina(destino) {
+    misPaginas.forEach((p, i) => {
+        // Calculamos un pequeño retraso basado en la posición de la página
+        // para que no giren todas a la vez si hay mucha distancia
+        const delay = Math.abs(i - destino) * 30; 
 
-
-
-
-botonOtros.onclick = function(){
-    defaultInfoOlimpo.style.display="block";
-    infoZeus.style.display="none";
-    infoHera.style.display="none";
-    infoPoseidon.style.display="none";
-    infoApolo.style.display="none";
-    infoDemeter.style.display="none";
-    infoArtemisa.style.display="none";
-    infoAres.style.display="none";
-    infoHermes.style.display="none"
-    infoAtenea.style.display="none"
-    infoAfrodita.style.display="none"
-    infoHefesto.style.display="none"
-    infoHestia.style.display="none"
+        setTimeout(() => {
+            if (i < destino) {
+                p.classList.add('flipped');
+            } else {
+                p.classList.remove('flipped');
+            }
+        }, delay);
+    });
 }
 
-/* Zeus */
-const botonInfoZeus = document.getElementById("botonZeus");
-const infoZeus = document.getElementById("sectionZeus");
+botonPortada.onclick = () => irAPagina(0);
+botonIndex.onclick = () => irAPagina(1);
+botonZeus.onclick = () => irAPagina(2);
+botonHera.onclick = () => irAPagina(3);
+botonPoseidon.onclick = () => irAPagina(4);
+botonApolo.onclick = () => irAPagina(5);
+botonDemeter.onclick = () => irAPagina(6);
+botonArtemisa.onclick = () => irAPagina(7);
+botonAres.onclick = () => irAPagina(8);
+botonHermes.onclick = () => irAPagina(9);
+botonAtenea.onclick = () => irAPagina(10);
+botonAfrodita.onclick = () => irAPagina(11);
+botonHefesto.onclick = () => irAPagina(12);
+botonHestia.onclick = () => irAPagina(13);
 
-botonInfoZeus.onclick = function(){
-    defaultInfoOlimpo.style.display="none";
-    infoZeus.style.display="block";
-    infoHera.style.display="none";
-    infoPoseidon.style.display="none";
-    infoApolo.style.display="none";
-    infoDemeter.style.display="none";
-    infoArtemisa.style.display="none";
-    infoAres.style.display="none";
-    infoHermes.style.display="none"
-    infoAtenea.style.display="none"
-    infoAfrodita.style.display="none"
-    infoHefesto.style.display="none"
-    infoHestia.style.display="none"
+const btnDark = document.getElementById('toggle-dark');
+
+if (btnDark) {
+    btnDark.onclick = () => {
+        document.documentElement.classList.toggle('dark');
+    };
 }
 
-/* Hera */
 
-const botonInfoHera = document.getElementById("botonHera");
-const infoHera = document.getElementById("sectionHera");
-
-botonInfoHera.onclick = function(){
-    defaultInfoOlimpo.style.display="none";
-    infoZeus.style.display="none";
-    infoHera.style.display="block";
-    infoPoseidon.style.display="none";
-    infoApolo.style.display="none";
-    infoDemeter.style.display="none";
-    infoArtemisa.style.display="none";
-    infoAres.style.display="none";
-    infoHermes.style.display="none"
-    infoAtenea.style.display="none"
-    infoAfrodita.style.display="none"
-    infoHefesto.style.display="none"
-    infoHestia.style.display="none"
-}
-
-/* Poseidon */
-const botonInfoPoseidon = document.getElementById("botonPoseidon");
-const infoPoseidon = document.getElementById("sectionPoseidon");
-
-botonInfoPoseidon.onclick = function(){
-    defaultInfoOlimpo.style.display="none";
-    infoZeus.style.display="none";
-    infoHera.style.display="none";
-    infoPoseidon.style.display="block";
-    infoApolo.style.display="none";
-    infoDemeter.style.display="none";
-    infoArtemisa.style.display="none";
-    infoAres.style.display="none";
-    infoHermes.style.display="none"
-    infoAtenea.style.display="none"
-    infoAfrodita.style.display="none"
-    infoHefesto.style.display="none"
-    infoHestia.style.display="none"
-}
-
-/* Apolo */
-const botonInfoApolo = document.getElementById("botonApolo");
-const infoApolo = document.getElementById("sectionApolo");
-
-botonInfoApolo.onclick = function(){
-    defaultInfoOlimpo.style.display="none";
-    infoZeus.style.display="none";
-    infoHera.style.display="none";
-    infoPoseidon.style.display="none";
-    infoApolo.style.display="block";
-    infoDemeter.style.display="none";
-    infoArtemisa.style.display="none";
-    infoAres.style.display="none";
-    infoHermes.style.display="none"
-    infoAtenea.style.display="none"
-    infoAfrodita.style.display="none"
-    infoHefesto.style.display="none"
-    infoHestia.style.display="none"
-}
-
-/* Demeter */
-const botonInfoDemeter = document.getElementById("botonDemeter");
-const infoDemeter = document.getElementById("sectionDemeter");
-
-botonInfoDemeter.onclick = function(){
-    defaultInfoOlimpo.style.display="none";
-    infoZeus.style.display="none";
-    infoHera.style.display="none";
-    infoPoseidon.style.display="none";
-    infoApolo.style.display="none";
-    infoDemeter.style.display="block";
-    infoArtemisa.style.display="none";
-    infoAres.style.display="none";
-    infoHermes.style.display="none"
-    infoAtenea.style.display="none"
-    infoAfrodita.style.display="none"
-    infoHefesto.style.display="none"
-    infoHestia.style.display="none"
-}
-
-/* Artemisa */
-const botonInfoArtemisa = document.getElementById("botonArtemisa");
-const infoArtemisa = document.getElementById("sectionArtemisa");
-
-botonInfoArtemisa.onclick = function(){
-    defaultInfoOlimpo.style.display="none";
-    infoZeus.style.display="none";
-    infoHera.style.display="none";
-    infoPoseidon.style.display="none";
-    infoApolo.style.display="none";
-    infoDemeter.style.display="none";
-    infoArtemisa.style.display="block";
-    infoAres.style.display="none";
-    infoHermes.style.display="none"
-    infoAtenea.style.display="none"
-    infoAfrodita.style.display="none"
-    infoHefesto.style.display="none"
-    infoHestia.style.display="none"
-}
-
-/* Ares */
-const botonInfoAres = document.getElementById("botonAres");
-const infoAres = document.getElementById("sectionAres");
-
-botonInfoAres.onclick = function(){
-    defaultInfoOlimpo.style.display="none";
-    infoZeus.style.display="none";
-    infoHera.style.display="none";
-    infoPoseidon.style.display="none";
-    infoApolo.style.display="none";
-    infoDemeter.style.display="none";
-    infoArtemisa.style.display="none";
-    infoAres.style.display="block";
-    infoHermes.style.display="none"
-    infoAtenea.style.display="none"
-    infoAfrodita.style.display="none"
-    infoHefesto.style.display="none"
-    infoHestia.style.display="none"
-}
-
-/* Hermes */
-const botonInfoHermes = document.getElementById("botonHermes");
-const infoHermes = document.getElementById("sectionHermes");
-
-botonInfoHermes.onclick = function(){
-    defaultInfoOlimpo.style.display="none";
-    infoZeus.style.display="none";
-    infoHera.style.display="none";
-    infoPoseidon.style.display="none";
-    infoApolo.style.display="none";
-    infoDemeter.style.display="none";
-    infoArtemisa.style.display="none";
-    infoAres.style.display="none";
-    infoHermes.style.display="block"
-    infoAtenea.style.display="none"
-    infoAfrodita.style.display="none"
-    infoHefesto.style.display="none"
-    infoHestia.style.display="none"
-}
-
-/* Atenea */
-const botonInfoAtenea = document.getElementById("botonAtenea");
-const infoAtenea = document.getElementById("sectionAtenea");
-
-botonInfoAtenea.onclick = function(){
-    defaultInfoOlimpo.style.display="none";
-    infoZeus.style.display="none";
-    infoHera.style.display="none";
-    infoPoseidon.style.display="none";
-    infoApolo.style.display="none";
-    infoDemeter.style.display="none";
-    infoArtemisa.style.display="none";
-    infoAres.style.display="none";
-    infoHermes.style.display="none"
-    infoAtenea.style.display="block"
-    infoAfrodita.style.display="none"
-    infoHefesto.style.display="none"
-    infoHestia.style.display="none"
-}
-
-/* Afrodita */
-const botonInfoAfrodita = document.getElementById("botonAfrodita");
-const infoAfrodita = document.getElementById("sectionAfrodita");
-
-botonInfoAfrodita.onclick = function(){
-    defaultInfoOlimpo.style.display="none";
-    infoZeus.style.display="none";
-    infoHera.style.display="none";
-    infoPoseidon.style.display="none";
-    infoApolo.style.display="none";
-    infoDemeter.style.display="none";
-    infoArtemisa.style.display="none";
-    infoAres.style.display="none";
-    infoHermes.style.display="none"
-    infoAtenea.style.display="none"
-    infoAfrodita.style.display="block"
-    infoHefesto.style.display="none"
-    infoHestia.style.display="none"
-}
-
-/* Hefesto */
-const botonInfoHefesto = document.getElementById("botonHefesto");
-const infoHefesto = document.getElementById("sectionHefesto");
-
-botonInfoHefesto.onclick = function(){
-    defaultInfoOlimpo.style.display="none";
-    infoZeus.style.display="none";
-    infoHera.style.display="none";
-    infoPoseidon.style.display="none";
-    infoApolo.style.display="none";
-    infoDemeter.style.display="none";
-    infoArtemisa.style.display="none";
-    infoAres.style.display="none";
-    infoHermes.style.display="none"
-    infoAtenea.style.display="none"
-    infoAfrodita.style.display="none"
-    infoHefesto.style.display="block"
-    infoHestia.style.display="none"
-}
-
-/* Hestia */
-const botonInfoHestia = document.getElementById("botonHestia");
-const infoHestia = document.getElementById("sectionHestia");
-
-botonInfoHestia.onclick = function(){
-    defaultInfoOlimpo.style.display="none";
-    infoZeus.style.display="none";
-    infoHera.style.display="none";
-    infoPoseidon.style.display="none";
-    infoApolo.style.display="none";
-    infoDemeter.style.display="none";
-    infoArtemisa.style.display="none";
-    infoAres.style.display="none";
-    infoHermes.style.display="none"
-    infoAtenea.style.display="none"
-    infoAfrodita.style.display="none"
-    infoHefesto.style.display="none"
-    infoHestia.style.display="block"
-}
