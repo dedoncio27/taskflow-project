@@ -390,8 +390,101 @@
 
     #formListaTareas {
         display: flex;
+        flex-wrap: wrap;
         gap: 10px;
         margin-bottom: 20px;
+    }
+
+    #prioridadTarea,
+    #recordatorioTarea {
+        padding: 10px;
+        border-radius: 5px;
+        border: 1px var(--color-borde-tareas);
+        background: var(--color-texto-introduccion-tareas);
+        color: white;
+    }
+
+    #prioridadTarea option,
+    #filtroPrioridad option {
+        color: #1a1a1a;
+        background: #fff;
+    }
+
+    #recordatorioTarea {
+        min-width: 180px;
+    }
+
+    .filtrosTareas {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 10px;
+        margin-bottom: 15px;
+    }
+
+    .filtrosTareas #busquedaTareas {
+        flex: 1;
+        min-width: 150px;
+    }
+
+    .filtrosTareas #filtroPrioridad {
+        padding: 10px;
+        border-radius: 5px;
+        border: 1px var(--color-borde-tareas);
+        background: var(--color-texto-introduccion-tareas);
+        color: white;
+        min-width: 160px;
+    }
+
+    .tareaContenido {
+        display: flex;
+        flex-direction: column;
+        gap: 6px;
+        flex: 1;
+    }
+
+    .tareaMeta {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 8px;
+        align-items: center;
+        font-size: 0.85em;
+    }
+
+    .badgePrioridad {
+        padding: 2px 8px;
+        border-radius: 4px;
+        font-weight: 600;
+        text-transform: uppercase;
+    }
+
+    .badgePrioridad.prioridad-urgente {
+        background: #dc2626;
+        color: white;
+    }
+
+    .badgePrioridad.prioridad-alta {
+        background: #ea580c;
+        color: white;
+    }
+
+    .badgePrioridad.prioridad-media {
+        background: #ca8a04;
+        color: #1a1a1a;
+    }
+
+    .badgePrioridad.prioridad-baja {
+        background: #16a34a;
+        color: white;
+    }
+
+    .tareaRecordatorio {
+        color: var(--color-dorado);
+        opacity: 0.9;
+    }
+
+    .tareaRecordatorio.recordatorioPasado {
+        opacity: 0.7;
+        text-decoration: line-through;
     }
 
     #infoTareas {
