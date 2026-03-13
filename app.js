@@ -5,6 +5,7 @@ const busqueda = document.getElementById("busquedaTareas");
 const prioridadInput = document.getElementById("prioridadTarea");
 const recordatorioInput = document.getElementById("recordatorioTarea");
 const filtroPrioridad = document.getElementById("filtroPrioridad");
+const filtroEstado = document.getElementById("filtroEstado");
 let arrayTareas = [];
 
 const ORDEN_PRIORIDAD = { urgente: 0, alta: 1, media: 2, baja: 3 };
@@ -17,12 +18,13 @@ function crearIdTarea() {
     return `${Date.now()}-${Math.random().toString(16).slice(2)}`;
 }
 
-/* Normaliza tareas antiguas (sin prioridad/recordatorio) */
+/* Normaliza tareas antiguas (sin prioridad/recordatorio/completado) */
 function normalizarTarea(t) {
     return {
         ...t,
         priority: t.priority ?? 'media',
-        reminder: t.reminder ?? null
+        reminder: t.reminder ?? null,
+        completed: t.completed ?? false
     };
 }
 
@@ -63,9 +65,10 @@ taskForm.addEventListener('submit', (e) => {
     guardarYActualizar();
 });
 
-/* Ordena tareas por prioridad y luego por recordatorio */
+/* Ordena tareas: pendientes primero, luego por prioridad y recordatorio */
 function ordenarTareas(lista) {
     return [...lista].sort((a, b) => {
+        if (a.completed !== b.completed) return a.completed ? 1 : -1;
         const pa = ORDEN_PRIORIDAD[a.priority] ?? 2;
         const pb = ORDEN_PRIORIDAD[b.priority] ?? 2;
         if (pa !== pb) return pa - pb;
@@ -88,13 +91,25 @@ function eliminarTarea(id) {
     guardarYActualizar();
 }
 
-/* Obtiene la lista filtrada según búsqueda y prioridad */
+/* Marca o desmarca una tarea como completada */
+function toggleCompletada(id) {
+    const idStr = String(id);
+    const task = arrayTareas.find(t => String(t.id) === idStr);
+    if (!task) return;
+    task.completed = !task.completed;
+    guardarYActualizar();
+}
+
+/* Obtiene la lista filtrada según búsqueda, prioridad y estado */
 function obtenerListaFiltrada() {
     let lista = arrayTareas.map(normalizarTarea);
     const texto = busqueda?.value?.toLowerCase().trim();
     const prioridad = filtroPrioridad?.value?.trim();
+    const estado = filtroEstado?.value?.trim();
     if (texto) lista = lista.filter(t => t.text.toLowerCase().includes(texto));
     if (prioridad) lista = lista.filter(t => (t.priority || 'media') === prioridad);
+    if (estado === 'pendientes') lista = lista.filter(t => !t.completed);
+    if (estado === 'completadas') lista = lista.filter(t => t.completed);
     return ordenarTareas(lista);
 }
 
@@ -108,7 +123,14 @@ function renderizar(listaAMostrar) {
         const t = normalizarTarea(task);
         const li = document.createElement('li');
         li.classList.add('objetoTarea', `prioridad-${t.priority}`);
+        if (t.completed) li.classList.add('tareaCompletada');
         li.dataset.id = String(t.id);
+
+        const checkbox = document.createElement('input');
+        checkbox.type = 'checkbox';
+        checkbox.className = 'checkboxTarea';
+        checkbox.checked = !!t.completed;
+        checkbox.title = t.completed ? 'Marcar como pendiente' : 'Marcar como completada';
 
         const wrap = document.createElement('div');
         wrap.className = 'tareaContenido';
@@ -147,7 +169,7 @@ function renderizar(listaAMostrar) {
         button.type = 'button';
         button.textContent = 'Eliminar';
 
-        li.append(wrap, button);
+        li.append(checkbox, wrap, button);
         fragment.appendChild(li);
     });
 
@@ -158,18 +180,25 @@ function aplicarFiltrosYRenderizar() {
     renderizar();
 }
 
-/* Elimina una tarea de la lista al hacer click en el botón */
+/* Elimina una tarea o marca completada al hacer click */
 taskList.addEventListener('click', (event) => {
-    if (!event.target.matches('.botonEliminar')) return;
     const li = event.target.closest('li');
     const id = li?.dataset?.id;
     if (!id) return;
-    eliminarTarea(id);
+
+    if (event.target.matches('.botonEliminar')) {
+        eliminarTarea(id);
+        return;
+    }
+    if (event.target.matches('.checkboxTarea')) {
+        toggleCompletada(id);
+    }
 });
 
-/* Filtra las tareas por texto y prioridad */
+/* Filtra las tareas por texto, prioridad y estado */
 if (busqueda) busqueda.addEventListener('input', aplicarFiltrosYRenderizar);
 if (filtroPrioridad) filtroPrioridad.addEventListener('change', aplicarFiltrosYRenderizar);
+if (filtroEstado) filtroEstado.addEventListener('change', aplicarFiltrosYRenderizar);
 
 /* Comprueba recordatorios y muestra notificaciones */
 function comprobarRecordatorios() {
