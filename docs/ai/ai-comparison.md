@@ -100,25 +100,25 @@ Cada closure recuerda su propio factor.
 
 Closures se usan muchísimo en:
 
--map
+- map
 
--filter
+- filter
 
--setTimeout
+- setTimeout
 
--eventos
+- eventos
 
--frameworks como React
+- frameworks como React
 
 Idea clave para recordar
 
 Un closure ocurre cuando una función:
 
--se define dentro de otra
+- se define dentro de otra
 
--usa variables externas
+- usa variables externas
 
--y mantiene acceso a ellas después
+- y mantiene acceso a ellas después
 
 ✅ Definición corta:
 
@@ -185,13 +185,13 @@ JavaScript es single-threaded: solo ejecuta una cosa a la vez en el hilo princip
 
 El event loop permite que aun así se puedan hacer cosas como:
 
--peticiones HTTP
+- peticiones HTTP
 
--temporizadores (setTimeout)
+- temporizadores (setTimeout)
 
--eventos del usuario (click, teclado)
+- eventos del usuario (click, teclado)
 
--lectura de archivos
+- lectura de archivos
 
 sin congelar la aplicación.
 
@@ -264,13 +264,13 @@ Macrotasks
 
 Ejemplos:
 
--setTimeout
+- setTimeout
 
--setInterval
+- setInterval
 
--eventos del DOM
+- eventos del DOM
 
--setImmediate (Node.js)
+- setImmediate (Node.js)
 
 Microtasks
 
@@ -278,11 +278,11 @@ Microtasks
 
 Ejemplos:
 
--Promise.then
+- Promise.then
 
--async/await
+- async/await
 
--queueMicrotask
+- queueMicrotask
 
 Ejemplo:
 
@@ -324,13 +324,13 @@ Intuición sencilla
 
 Piensa en el event loop como un camarero:
 
--La cocina (Web APIs) prepara pedidos lentos.
+- La cocina (Web APIs) prepara pedidos lentos.
 
--Los pedidos terminados se ponen en una cola.
+- Los pedidos terminados se ponen en una cola.
 
--El camarero (event loop) mira si la mesa (call stack) está libre.
+- El camarero (event loop) mira si la mesa (call stack) está libre.
 
--Si lo está, sirve el siguiente pedido.
+- Si lo está, sirve el siguiente pedido.
 
 Así el restaurante nunca se bloquea esperando la comida.
 
@@ -468,13 +468,13 @@ Tipos de nodos en el DOM
 
 Los más comunes son:
 
--Document → toda la página
+- Document → toda la página
 
--Element → etiquetas HTML (div, p, h1)
+- Element → etiquetas HTML (div, p, h1)
 
--Text → el texto dentro de las etiquetas
+- Text → el texto dentro de las etiquetas
 
--Attribute → atributos (class, id, etc.)
+- Attribute → atributos (class, id, etc.)
 
 Ejemplo visual
 
@@ -500,11 +500,11 @@ Idea clave
 
 El DOM es la interfaz que conecta:
 
--HTML → estructura de la página
+- HTML → estructura de la página
 
--CSS → estilos
+- CSS → estilos
 
--JavaScript → comportamiento
+- JavaScript → comportamiento
 
 ✅ Definición corta (tipo entrevista):
 
@@ -560,10 +560,10 @@ titulo.remove();
 DOM ≠ HTML
 Esto confunde mucho al principio. Son cosas distintas:
 
--El HTML es el texto estático del archivo
--El DOM es el árbol vivo en memoria
--JavaScript modifica el DOM → la página cambia visualmente
--El archivo HTML original no se toca nunca
+- El HTML es el texto estático del archivo
+- El DOM es el árbol vivo en memoria
+- JavaScript modifica el DOM → la página cambia visualmente
+- El archivo HTML original no se toca nunca
 
 ---
 
@@ -787,7 +787,7 @@ Resultado
 aloH
 ```
 Cómo se ejecuta ahora
-
+```
 Para "Hola":
 
 i	texto[i]	resultado
@@ -795,6 +795,7 @@ i	texto[i]	resultado
 2	l	al
 1	o	alo
 0	H	aloH
+```
 
 ---
 
@@ -846,13 +847,14 @@ console.log(invertirPalabra("Hola")); // → "aloH"
 ---
 
 Lo que pasaba paso a paso:
+```
 i   texto[i]    resultado
 4   undefined   "undefined"
 3   "a"         "undefineda"
 2   "l"         "definedal"
 1   "o"         "undefinedalo"
 0   "H"         "undefinedaloH"
-
+```
 Bonus: en JavaScript moderno esto se puede hacer en una línea:
 ```JavaScript
 const invertirPalabra = texto => texto.split("").reverse().join("");
@@ -879,26 +881,158 @@ function calcularTotalCarrito(productos) {
   return total;
 }
 
-const carrito1 = [{ nombre: "Libro", precio: 19,99 }, { nombre: "Pluma", precio: 5 }];
+const carrito1 = [{ nombre: "Libro", precio: "19,99" }, { nombre: "Pluma", precio: 5 }];
 console.log("Total 1:", calcularTotalCarrito(carrito1)); 
 
 ```
 
-El problema es que esto funciona con números enteros no con
+El problema es que esto funciona con números enteros no con strintgs y el precio del libro está en string por lo que debería pasar el producto.precio a number o parseFloat y comprobar si es un número real antes de añadirlo al total
 
 ---
 
 ### ChatGPT
 
+El problema está en el tipo de dato del precio del primer producto.
+
+En tu carrito tienes:
+```JavaScript
+const carrito1 = [
+  { nombre: "Libro", precio: "19,99" },
+  { nombre: "Pluma", precio: 5 }
+];
+```
+El precio "19,99" es un string, no un número, y además usa coma en vez de punto.
+En JavaScript los números decimales usan punto (.).
+
+---
+
+Qué ocurre en tu función
+
+Tu función suma así:
+```JavaScript
+total += producto.precio;
+```
+Pero si uno de los valores es un string, JavaScript puede comportarse como concatenación o generar NaN.
+
+---
+
+Solución 1 (mejor): usar números correctamente
+```JavaScript
+const carrito1 = [
+  { nombre: "Libro", precio: 19.99 },
+  { nombre: "Pluma", precio: 5 }
+];
+```
+Tu función funcionará correctamente:
+```JavaScript
+function calcularTotalCarrito(productos) {
+  let total = 0;
+
+  productos.forEach(producto => {
+    total += producto.precio;
+  });
+
+  return total;
+}
+```
+Resultado:
+```
+Total 1: 24.99`
+```
+
+---
+
+Solución 2: convertir el precio dentro de la función
+
+Si los precios pueden venir como string:
+```JavaScript
+function calcularTotalCarrito(productos) {
+  let total = 0;
+
+  productos.forEach(producto => {
+    let precio = parseFloat(producto.precio.toString().replace(",", "."));
+    total += precio;
+  });
+
+  return total;
+}
+```
+Esto:
+
+1. Convierte el precio a string
+
+2. Cambia , por .
+
+3. Lo convierte a número con parseFloat
+
+Versión más limpia usando reduce (muy usada en entrevistas)
+```JavaScript
+function calcularTotalCarrito(productos) {
+  return productos.reduce((total, producto) => {
+    return total + Number(producto.precio.toString().replace(",", "."));
+  }, 0);
+}
+```
+✔ Problema principal: "19,99" es un string con coma decimal, y JavaScript espera números con punto (19.99).
 
 ---
 
 ### ClaudeAI
 
+El problema es de tipos de datos. El precio del primer producto es un string, no un número:
+```JavaScript
+{ nombre: "Libro", precio: "19,99" }  // ← string con coma
+{ nombre: "Pluma", precio: 5 }        // ← número correcto
+```
+Cuando sumas un string y un número en JavaScript, no suma, concatena:
+```JavaScript
+"19,99" + 5 // → "19,995"  ❌  (no es 24.99)
+```
+
+---
+
+Dos problemas en uno:
+
+1. "19,99" es un string en vez de número
+2. Usa coma decimal en lugar de punto → 19,99 en vez de 19.99
+
+---
+
+La corrección del dato:
+```JavaScript
+const carrito1 = [
+  { nombre: "Libro", precio: 19.99 },  // ← número con punto decimal
+  { nombre: "Pluma", precio: 5 }
+];
+```
+
+---
+
+Pero si los precios vienen de fuera (una API, un formulario...) y no controlas el formato, defiéndete dentro de la función:
+```javascript
+function calcularTotalCarrito(productos) {
+  let total = 0;
+  productos.forEach(producto => {
+    const precio = parseFloat(
+      String(producto.precio).replace(",", ".")  // "19,99" → 19.99
+    );
+    total += isNaN(precio) ? 0 : precio;  // si no es número, suma 0
+  });
+  return total;
+}
+
+console.log(calcularTotalCarrito(carrito1)); // → 24.99 ✅
+```
+
+---
+
+Regla general: siempre que hagas operaciones matemáticas, valida que tus datos son realmente números. Es uno de los bugs más silenciosos porque JavaScript no lanza error, simplemente hace algo inesperado.
 
 ---
 
 ### Conclusión
 
+Los dos identifican bien el problema que es que hay un String y te dan 2 soluciones o cambiar el dato a number o pasar el string a parseFloat, también encuentran el error de que los decimales están escritos con una , en vez de un . (fallo mio se me ha escapado), que remplazan la , por . al pasar el precio a número.
+En este caso ClaudeAI lo hace mejor ya que te dá una comprobación extra de si el numero isNaN para comprobar si es un número real.
 
 ---
