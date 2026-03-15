@@ -139,7 +139,7 @@ if (busqueda) busqueda.addEventListener('input', aplicarFiltrosYRenderizar);
 if (filtroPrioridad) filtroPrioridad.addEventListener('change', aplicarFiltrosYRenderizar);
 ```
 
-Esta funcion filtra la lista de tareas por prioridad elegida, primero accede a la funcion normalizarTarea para que le de una prioridad a las tareas si alguna es antigua y no la tiene y deja el recordatorio en null, añade el texto añadido a una constante y filtra si tu busqueda coincide con alguna de las tareas ya añadidas a la lista y toma la prioridad seleccionada para devolver las tareas que coincidan con la prioridad.
+Esta función filtra la lista de tareas por prioridad elegida, primero accede a la función normalizarTarea para que le de una prioridad a las tareas si alguna es antigua y no la tiene y deja el recordatorio en null, añade el texto añadido a una constante y filtra si tu búsqueda coincide con alguna de las tareas ya añadidas a la lista y toma la prioridad seleccionada para devolver las tareas que coincidan con la prioridad.
 
 ```javascript
 function comprobarRecordatorios() {
@@ -162,7 +162,7 @@ function comprobarRecordatorios() {
 }
 ```
 
-Esta funcion comprueba los recordatorios y envia un alert en tu pagina cuando llega la fecha elegida en la tarea, recorre todas las tareas, comprueba si tiene recordatorio, comprueba también si este recordatorio ya pasó, le da un valor key que indica si este recordatorio ha sido visto o no, comprueba que el navegador permita las notificaciones y envia el alert con el nombre de la tarea a la fecha y hora elegida.
+Esta función comprueba los recordatorios y envía un alert en tu pagina cuando llega la fecha elegida en la tarea, recorre todas las tareas, comprueba si tiene recordatorio, comprueba también si este recordatorio ya pasó, le da un valor key que indica si este recordatorio ha sido visto o no, comprueba que el navegador permita las notificaciones y envía el alert con el nombre de la tarea a la fecha y hora elegida.
 
 ```javascript
 document.addEventListener('DOMContentLoaded', () => {
@@ -187,7 +187,7 @@ document.addEventListener('DOMContentLoaded', () => {
 });
 ```
 
-Este codigo pide permiso de recibir notificaciones para que la funcionalidad de recordatorio funcione.
+Este código pide permiso de recibir notificaciones para que la funcionalidad de recordatorio funcione.
 
 ---
 
@@ -226,7 +226,7 @@ function toggleCompletada(id) {
 }
 ```
 
-La funcion normalizarTarea añade completed: false por defecto a tareas antiguas. La funcion toggleCompletada invierte el estado completed de la tarea al hacer clic en el checkbox y guarda los cambios.
+La función normalizarTarea añade completed: false por defecto a tareas antiguas. La función toggleCompletada invierte el estado completed de la tarea al hacer clic en el checkbox y guarda los cambios.
 
 ```javascript
 const filtroEstado = document.getElementById("filtroEstado");
@@ -282,11 +282,11 @@ taskList.addEventListener('click', (event) => {
 });
 ```
 
-Cada tarea muestra un checkbox a la izquierda. Si la tarea esta completada, el li recibe la clase tareaCompletada y el texto se muestra tachado (text-decoration: line-through). El evento click distingue entre el boton Eliminar y el checkbox para ejecutar la accion correspondiente.
+Cada tarea muestra un checkbox a la izquierda. Si la tarea esta completada, el li recibe la clase tareaCompletada y el texto se muestra tachado (text-decoration: line-through). El evento click distingue entre el boton Eliminar y el checkbox para ejecutar la acción correspondiente.
 
 ---
 
-### Funcionalidad 4: Modo osuro o claro persistente
+### Funcionalidad 4: Modo oscuro o claro persistente
 
 JavaScript:
 ```JavaScript
@@ -302,4 +302,4 @@ btnDark.addEventListener('click', () => {
 ```
 Guarda el tema en una constante en el localStorage y asi recuerda si tenías el modo claro o oscuro para la próxima vez que entres a la página sea en el modo que esuviste por última vez
 
-Comprueba la constante y aplica el tema guardado en la constante, también aplica un addEventListener para que al dar al boton cambie el tema y también el valor de la constante ya que tiene el valor 'theme'.
+Comprueba la constante y aplica el tema guardado en la constante, también aplica un addEventListener para que al dar al botón cambie el tema y también el valor de la constante ya que tiene el valor 'theme'.
