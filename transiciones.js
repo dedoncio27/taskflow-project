@@ -1,57 +1,94 @@
-const misPaginas = [
-    document.querySelector(".paginaPortada"), 
-    document.querySelector(".paginaIndex"),   
-    document.querySelector(".paginaZeus"),    
-    document.querySelector(".paginaHera"),    
-    document.querySelector(".paginaPoseidon"),
-    document.querySelector(".paginaApolo"),
-    document.querySelector(".paginaDemeter"),
-    document.querySelector(".paginaArtemisa"),
-    document.querySelector(".paginaAres"),
-    document.querySelector(".paginaHermes"),
-    document.querySelector(".paginaAtenea"),
-    document.querySelector(".paginaAfrodita"),
-    document.querySelector(".paginaHefesto"),
-    document.querySelector(".paginaHestia")
-];
 
+const misPaginas = [
+    ".paginaPortada",
+    ".paginaIndex",
+    ".paginaZeus",
+    ".paginaHera",
+    ".paginaPoseidon",
+    ".paginaApolo",
+    ".paginaDemeter",
+    ".paginaArtemisa",
+    ".paginaAres",
+    ".paginaHermes",
+    ".paginaAtenea",
+    ".paginaAfrodita",
+    ".paginaHefesto",
+    ".paginaHestia",
+].map((sel) => document.querySelector(sel)).filter(Boolean);
+
+let navToken = 0;
+let navTimeouts = [];
+
+/* Función para ir a una página */
 function irAPagina(destino) {
+    navToken += 1;
+    const token = navToken;
+
+    navTimeouts.forEach(clearTimeout);
+    navTimeouts = [];
+
+    /* Aplica la transición de flip a las páginas */
     misPaginas.forEach((p, i) => {
-        // Calculamos un pequeño retraso basado en la posición de la página
-        // para que no giren todas a la vez si hay mucha distancia
         const delay = Math.abs(i - destino) * 30; 
 
-        setTimeout(() => {
+        const t = setTimeout(() => {
+            if (token !== navToken) return;
             if (i < destino) {
                 p.classList.add('flipped');
             } else {
                 p.classList.remove('flipped');
             }
         }, delay);
+
+        navTimeouts.push(t);
     });
 }
 
-botonPortada.onclick = () => irAPagina(0);
-botonIndex.onclick = () => irAPagina(1);
-botonZeus.onclick = () => irAPagina(2);
-botonHera.onclick = () => irAPagina(3);
-botonPoseidon.onclick = () => irAPagina(4);
-botonApolo.onclick = () => irAPagina(5);
-botonDemeter.onclick = () => irAPagina(6);
-botonArtemisa.onclick = () => irAPagina(7);
-botonAres.onclick = () => irAPagina(8);
-botonHermes.onclick = () => irAPagina(9);
-botonAtenea.onclick = () => irAPagina(10);
-botonAfrodita.onclick = () => irAPagina(11);
-botonHefesto.onclick = () => irAPagina(12);
-botonHestia.onclick = () => irAPagina(13);
+/* Define las páginas y sus destinos */
+const navegacion = [
+    ["botonPortada", 0],
+    ["botonIndex", 1],
+    ["botonZeus", 2],
+    ["botonHera", 3],
+    ["botonPoseidon", 4],
+    ["botonApolo", 5],
+    ["botonDemeter", 6],
+    ["botonArtemisa", 7],
+    ["botonAres", 8],
+    ["botonHermes", 9],
+    ["botonAtenea", 10],
+    ["botonAfrodita", 11],
+    ["botonHefesto", 12],
+    ["botonHestia", 13],
+];
 
+navegacion.forEach(([id, destino]) => {
+    const btn = document.getElementById(id);
+    if (!btn) return;
+    btn.addEventListener('click', () => irAPagina(destino));
+});
+
+/**Boton modo oscuro */
 const btnDark = document.getElementById('toggle-dark');
 
 if (btnDark) {
-    btnDark.onclick = () => {
-        document.documentElement.classList.toggle('dark');
+    const root = document.documentElement;
+    /* Aplica el tema oscuro o claro */
+    const aplicarTheme = (theme) => {
+        const dark = theme === 'dark';
+        root.classList.toggle('dark', dark);
+        btnDark.setAttribute('aria-pressed', String(dark));
+        btnDark.textContent = dark ? 'Modo claro' : 'Modo oscuro';
     };
+    /* Carga el tema guardado en el localStorage */
+    const guardado = localStorage.getItem('theme');
+    if (guardado === 'dark' || guardado === 'light') aplicarTheme(guardado);
+    else aplicarTheme(root.classList.contains('dark') ? 'dark' : 'light');
+    /* Cambia el tema al hacer click en el botón */
+    btnDark.addEventListener('click', () => {
+        const next = root.classList.contains('dark') ? 'light' : 'dark';
+        localStorage.setItem('theme', next);
+        aplicarTheme(next);
+    });
 }
-
 
