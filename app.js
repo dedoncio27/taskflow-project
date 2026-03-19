@@ -6,7 +6,9 @@ const prioridadInput = document.getElementById("prioridadTarea");
 const recordatorioInput = document.getElementById("recordatorioTarea");
 const filtroPrioridad = document.getElementById("filtroPrioridad");
 const filtroEstado = document.getElementById("filtroEstado");
+const VERSION_ACTUAL = "1.1";
 let arrayTareas = [];
+let idTareaEnEdicion = null;
 
 const ORDEN_PRIORIDAD = { urgente: 0, alta: 1, media: 2, baja: 3 };
 
@@ -34,6 +36,10 @@ function resetTaskInput() {
     taskInput.style.border = "1px solid #040353";
     if (prioridadInput) prioridadInput.value = 'media';
     if (recordatorioInput) recordatorioInput.value = '';
+
+    idTareaEnEdicion = null;
+    const btnSubmit = taskForm.querySelector('button[type="submit"]');
+    if (btnSubmit) btnSubmit.textContent = 'Añadir Tarea';
     taskInput.focus();
 }
 
@@ -41,26 +47,44 @@ function resetTaskInput() {
 taskForm.addEventListener('submit', (e) => {
     e.preventDefault();
     const texto = taskInput.value.trim();
+    
     if (texto === '') {
         taskInput.style.border = "2px solid red";
-        setTimeout(resetTaskInput, 1000);
+        // Aquí no usamos resetTaskInput para no cancelar la edición accidentalmente
+        setTimeout(() => taskInput.style.border = "1px solid #040353", 1000); 
         return;
     }
+
+    // Validamos que no exista otra tarea con el mismo nombre (ignorando la que estamos editando)
     const existe = arrayTareas.some(
-        task => task.text.toLowerCase() === texto.toLowerCase()
+        task => task.text.toLowerCase() === texto.toLowerCase() && task.id !== idTareaEnEdicion
     );
+    
     if (existe) {
         taskInput.style.border = "2px solid red";
         alert("Esa tarea ya ha sido añadida.");
-        setTimeout(resetTaskInput, 1000);
+        setTimeout(() => taskInput.style.border = "1px solid #040353", 1000);
         return;
     }
+
     const priority = prioridadInput?.value || 'media';
     const reminderRaw = recordatorioInput?.value?.trim();
     const reminder = reminderRaw ? new Date(reminderRaw).toISOString() : null;
 
-    const nuevaTarea = { id: crearIdTarea(), text: texto, priority, reminder };
-    arrayTareas.push(nuevaTarea);
+    if (idTareaEnEdicion !== null) {
+        // MODO EDICIÓN
+        const index = arrayTareas.findIndex(t => t.id === idTareaEnEdicion);
+        if (index !== -1) {
+            arrayTareas[index].text = texto;
+            arrayTareas[index].priority = priority;
+            arrayTareas[index].reminder = reminder;
+        }
+    } else {
+        // MODO CREACIÓN
+        const nuevaTarea = { id: crearIdTarea(), text: texto, priority, reminder, completed: false };
+        arrayTareas.push(nuevaTarea);
+    }
+
     resetTaskInput();
     guardarYActualizar();
 });
@@ -126,11 +150,7 @@ function renderizar(listaAMostrar) {
         if (t.completed) li.classList.add('tareaCompletada');
         li.dataset.id = String(t.id);
 
-        const checkbox = document.createElement('input');
-        checkbox.type = 'checkbox';
-        checkbox.className = 'checkboxTarea';
-        checkbox.checked = !!t.completed;
-        checkbox.title = t.completed ? 'Marcar como pendiente' : 'Marcar como completada';
+        // --- ELIMINAMOS EL BLOQUE DEL CHECKBOX ---
 
         const wrap = document.createElement('div');
         wrap.className = 'tareaContenido';
@@ -150,26 +170,27 @@ function renderizar(listaAMostrar) {
 
         if (t.reminder) {
             const d = new Date(t.reminder);
-            const now = new Date();
             const recordatorio = document.createElement('span');
             recordatorio.className = 'tareaRecordatorio';
-            recordatorio.textContent = d.toLocaleString('es-ES', {
-                dateStyle: 'short',
-                timeStyle: 'short'
-            });
-            if (d <= now) recordatorio.classList.add('recordatorioPasado');
+            recordatorio.textContent = d.toLocaleString('es-ES', { dateStyle: 'short', timeStyle: 'short' });
             meta.appendChild(recordatorio);
         }
 
         wrap.appendChild(span);
         wrap.appendChild(meta);
 
-        const button = document.createElement('button');
-        button.className = 'botonEliminar';
-        button.type = 'button';
-        button.textContent = 'Eliminar';
+        const botonEditar = document.createElement('button');
+        botonEditar.className = 'botonEditar';
+        botonEditar.type = 'button';
+        botonEditar.textContent = '✏️';
 
-        li.append(checkbox, wrap, button);
+        const buttonEliminar = document.createElement('button');
+        buttonEliminar.className = 'botonEliminar';
+        buttonEliminar.type = 'button';
+        buttonEliminar.textContent = '🗑️';
+
+        // Solo añadimos el contenido y los botones
+        li.append(wrap, botonEditar, buttonEliminar);
         fragment.appendChild(li);
     });
 
@@ -186,13 +207,33 @@ taskList.addEventListener('click', (event) => {
     const id = li?.dataset?.id;
     if (!id) return;
 
+    // 1. Si el clic fue en el botón Eliminar
     if (event.target.matches('.botonEliminar')) {
         eliminarTarea(id);
-        return;
+        return; // Salimos para que no ejecute el toggle
     }
-    if (event.target.matches('.checkboxTarea')) {
-        toggleCompletada(id);
+
+    // 2. Si el clic fue en el botón Editar
+    if (event.target.matches('.botonEditar')) {
+        const task = arrayTareas.find(t => String(t.id) === String(id));
+        if (!task) return;
+
+        idTareaEnEdicion = task.id;
+        taskInput.value = task.text;
+        if (prioridadInput) prioridadInput.value = task.priority;
+        if (recordatorioInput && task.reminder) {
+            recordatorioInput.value = new Date(task.reminder).toISOString().slice(0, 16);
+        }
+
+        const btnSubmit = taskForm.querySelector('button[type="submit"]');
+        if (btnSubmit) btnSubmit.textContent = 'Actualizar Tarea';
+        
+        taskInput.focus();
+        return; // Salimos para que no ejecute el toggle
     }
+
+    // 3. Si se pulsó en cualquier otra parte del LI (fondo, texto, etc.)
+    toggleCompletada(id);
 });
 
 /* Filtra las tareas por texto, prioridad y estado */
@@ -221,19 +262,56 @@ function comprobarRecordatorios() {
 }
 
 /* Solicita permiso de notificaciones al cargar */
+const tareasPorDefecto = [
+    { id: crearIdTarea(), text: "Leer capitulo Zeus", priority: "alta", reminder: null, completed: false },
+    { id: crearIdTarea(), text: "Leer capitulo Hera", priority: "media", reminder: null, completed: false },
+    { id: crearIdTarea(), text: "Leer capitulo Poseidón", priority: "alta", reminder: null, completed: false },
+    { id: crearIdTarea(), text: "Leer capitulo Apolo", priority: "alta", reminder: null, completed: false },
+    { id: crearIdTarea(), text: "Leer capitulo Demeter", priority: "alta", reminder: null, completed: false },
+    { id: crearIdTarea(), text: "Leer capitulo Artemisa", priority: "alta", reminder: null, completed: false },
+    { id: crearIdTarea(), text: "Leer capitulo Ares", priority: "alta", reminder: null, completed: false },
+    { id: crearIdTarea(), text: "Leer capitulo Hermes", priority: "alta", reminder: null, completed: false },
+    { id: crearIdTarea(), text: "Leer capitulo Atenea", priority: "alta", reminder: null, completed: false },
+    { id: crearIdTarea(), text: "Leer capitulo Afrodita", priority: "alta", reminder: null, completed: false },
+    { id: crearIdTarea(), text: "Leer capitulo Hefesto", priority: "alta", reminder: null, completed: false },
+    { id: crearIdTarea(), text: "Leer capitulo Hestía", priority: "alta", reminder: null, completed: false },
+];
+
+/* Solicita permiso de notificaciones al cargar e inicializa tareas */
 document.addEventListener('DOMContentLoaded', () => {
     const tareasGuardadas = localStorage.getItem('tareas');
-    if (tareasGuardadas) {
+    console.log("Estado inicial de localStorage:", tareasGuardadas);
+    const versionGuardada = localStorage.getItem('app_version');
+
+    // Si la versión es distinta a la actual, forzamos la carga de tareas nuevas
+    if (versionGuardada !== VERSION_ACTUAL) {
+        console.log("Nueva versión detectada. Actualizando tareas...");
+        
+        // Opción A: Reemplazar todo por lo nuevo
+        arrayTareas = [...tareasPorDefecto, ...JSON.parse(tareasGuardadas || '[]')];
+    
+        localStorage.setItem('app_version', VERSION_ACTUAL);
+        guardarYActualizar();
+    }
+
+    if (tareasGuardadas === null) {
+        // Solo entra aquí si NUNCA se ha guardado nada
+        arrayTareas = tareasPorDefecto;
+        guardarYActualizar();
+    } else {
         try {
             const parsed = JSON.parse(tareasGuardadas);
+            // Si el array existe pero está vacío, cargamos lo que haya (lista vacía)
             arrayTareas = Array.isArray(parsed) ? parsed : [];
-        } catch {
+        } catch (e) {
+            console.error("Error al parsear tareas:", e);
             arrayTareas = [];
             localStorage.removeItem('tareas');
         } finally {
             aplicarFiltrosYRenderizar();
         }
     }
+
     comprobarRecordatorios();
     setInterval(comprobarRecordatorios, 60000);
 

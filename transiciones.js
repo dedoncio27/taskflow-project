@@ -62,10 +62,15 @@ const navegacion = [
     ["botonHestia", 13],
 ];
 
+
 navegacion.forEach(([id, destino]) => {
-    const btn = document.getElementById(id);
-    if (!btn) return;
-    btn.addEventListener('click', () => irAPagina(destino));
+    const link = document.getElementById(id);
+    if (!link) return;
+    
+    link.addEventListener('click', (e) => {
+        e.preventDefault(); // IMPRESCINDIBLE: Evita que el enlace recargue la página
+        irAPagina(destino);
+    });
 });
 
 /**Boton modo oscuro */
@@ -78,7 +83,7 @@ if (btnDark) {
         const dark = theme === 'dark';
         root.classList.toggle('dark', dark);
         btnDark.setAttribute('aria-pressed', String(dark));
-        btnDark.textContent = dark ? 'Modo claro' : 'Modo oscuro';
+        btnDark.textContent = dark ? "Modo claro☀️" : "Modo oscuro🌙";
     };
     /* Carga el tema guardado en el localStorage */
     const guardado = localStorage.getItem('theme');
