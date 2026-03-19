@@ -132,6 +132,7 @@ function obtenerListaFiltrada() {
     const estado = filtroEstado?.value?.trim();
     if (texto) lista = lista.filter(t => t.text.toLowerCase().includes(texto));
     if (prioridad) lista = lista.filter(t => (t.priority || 'media') === prioridad);
+    if (estado === 'ninguna')  return []; 
     if (estado === 'pendientes') lista = lista.filter(t => !t.completed);
     if (estado === 'completadas') lista = lista.filter(t => t.completed);
     return ordenarTareas(lista);
@@ -264,7 +265,7 @@ function comprobarRecordatorios() {
 /* Solicita permiso de notificaciones al cargar */
 const tareasPorDefecto = [
     { id: crearIdTarea(), text: "Leer capitulo Zeus", priority: "alta", reminder: null, completed: false },
-    { id: crearIdTarea(), text: "Leer capitulo Hera", priority: "media", reminder: null, completed: false },
+    { id: crearIdTarea(), text: "Leer capitulo Hera", priority: "alta", reminder: null, completed: false },
     { id: crearIdTarea(), text: "Leer capitulo Poseidón", priority: "alta", reminder: null, completed: false },
     { id: crearIdTarea(), text: "Leer capitulo Apolo", priority: "alta", reminder: null, completed: false },
     { id: crearIdTarea(), text: "Leer capitulo Demeter", priority: "alta", reminder: null, completed: false },

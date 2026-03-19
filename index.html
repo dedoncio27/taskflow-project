@@ -19,6 +19,46 @@
     </nav>  
     
     <main>
+        <section class="registroTareas">
+            <h2 class="titulo">Registro de capítulos</h2>
+
+            <form id="formListaTareas">
+
+                <input type="text" id="infoTareas" placeholder="Añade una tarea" required>
+
+                <select id="prioridadTarea" title="Prioridad">
+                    <option value="baja">Baja</option>
+                    <option value="media" selected>Media</option>
+                    <option value="alta">Alta</option>
+                    <option value="urgente">Urgente</option>
+                </select>
+
+                <input type="datetime-local" id="recordatorioTarea" title="Fecha y hora del recordatorio">
+
+                <button type="submit" id="botonAñadirTarea">Asignar Tarea</button>
+
+            </form>
+
+            <div class="filtrosTareas">
+                <input type="text" id="busquedaTareas" placeholder="Busca tus tareas">
+                <select id="filtroPrioridad" title="Filtrar por prioridad">
+                    <option value="">Todas las prioridades</option>
+                    <option value="urgente">Urgente</option>
+                    <option value="alta">Alta</option>
+                    <option value="media">Media</option>
+                    <option value="baja">Baja</option>
+                </select>
+                <select id="filtroEstado" title="Filtrar por estado">
+                    <option value="">Todas</option>
+                    <option value="pendientes">Pendientes</option>
+                    <option value="completadas">Completadas</option>
+                    <option value="ninguna">Ninguna</option> </select>
+                </select>
+            </div>
+
+            <ul id="listaTareas"></ul>
+
+        </section>
         <div class="infoLibro">
             <aside>
                 <ul class="contenedorBotones">
@@ -283,45 +323,7 @@
                 </div>
             </section>
         </div>
-        <section class="registroTareas">
-            <h2 class="titulo">Registro de capítulos</h2>
-
-            <form id="formListaTareas">
-
-                <input type="text" id="infoTareas" placeholder="Añade una tarea" required>
-
-                <select id="prioridadTarea" title="Prioridad">
-                    <option value="baja">Baja</option>
-                    <option value="media" selected>Media</option>
-                    <option value="alta">Alta</option>
-                    <option value="urgente">Urgente</option>
-                </select>
-
-                <input type="datetime-local" id="recordatorioTarea" title="Fecha y hora del recordatorio">
-
-                <button type="submit" id="botonAñadirTarea">Asignar Tarea</button>
-
-            </form>
-
-            <div class="filtrosTareas">
-                <input type="text" id="busquedaTareas" placeholder="Busca tus tareas">
-                <select id="filtroPrioridad" title="Filtrar por prioridad">
-                    <option value="">Todas las prioridades</option>
-                    <option value="urgente">Urgente</option>
-                    <option value="alta">Alta</option>
-                    <option value="media">Media</option>
-                    <option value="baja">Baja</option>
-                </select>
-                <select id="filtroEstado" title="Filtrar por estado">
-                    <option value="">Todas</option>
-                    <option value="pendientes">Pendientes</option>
-                    <option value="completadas">Completadas</option>
-                </select>
-            </div>
-
-            <ul id="listaTareas"></ul>
-
-        </section>
+        
     </main>
     <footer>
         <div class="divFooter">  

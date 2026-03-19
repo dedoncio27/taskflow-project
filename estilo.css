@@ -22,8 +22,8 @@
     --color-borde-plata:#C0C0C0;
     --color-dorado:#FFD700;
     --color-black:#000000;
-    --color-fondo-tareas:rgba(67, 148, 223, 0.2);
-    --color-fondo-tareas-añadidas:rgba(67, 148, 223, 0.2);
+    --color-fondo-tareas:rgba(30, 111, 187, 0.39);
+    --color-fondo-tareas-añadidas:rgba(64, 144, 219, 0.288);
     --color-fondo-tareas-añadidas-hover: rgba(48, 108, 165, 0.2);
     --color-placeholder:#000000;
     --sombra-body: 0 0 10px #fff, 0 0 20px #838183, 0 0 30px #4d4c4c;
@@ -48,7 +48,7 @@
     --color-footer:#333435;
     --fuente-texto-titulos:italic;
     --fuente-texto:'Times New Roman', Times, serif;
-    --color-borde-tareas:solid #000000;
+    --color-borde-tareas:solid #5a5a5a;
     --color-paginas-libro:#6d5034;
     --color-paginas-libro-back:#cfb89a;
     --color-borde-plata:#C0C0C0;
@@ -433,10 +433,11 @@
 
 
     .registroTareas {
-        background: var(--color-nav);
+        /*background: var(--color-fondo-tareas);*/
         padding: 20px;
-        border-radius: 15px;
-        border: 3px var(--color-borde-tareas);
+        border-radius: 10px;
+        border-bottom: 3px var(--color-borde-tareas);
+        border-top: 3px var(--color-borde-tareas);
         margin-top: 30px;
         margin-bottom: 30px;
         color: white;
@@ -447,6 +448,7 @@
         flex-wrap: wrap;
         gap: 10px;
         margin-bottom: 20px;
+        margin-top: 20px;
     }
 
     #prioridadTarea,
