@@ -498,7 +498,7 @@
     align-items: center;
     justify-content: center;
     text-align: center;
-    background: linear-gradient(to right, var(--color-base), var(--color-destenido));
+    background: var(--color-base);
     padding: 12px 24px;
     border: 0;
     border-radius: 8px;

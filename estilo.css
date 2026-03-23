@@ -184,11 +184,11 @@
         justify-self: center;
 
         display: flex;
-    flex-direction: column;
-    padding: 20px;
-    box-sizing: border-box; /* Asegura que el padding no sume al tamaño total */
-    overflow-y: auto;       /* ¡Clave! Si el texto no cabe, aparece un scroll interno */
-    overflow-x: hidden;
+        flex-direction: column;
+        padding: 20px;
+        box-sizing: border-box; 
+        overflow-y: auto;       
+        overflow-x: hidden;
     }
 
 
@@ -353,20 +353,13 @@
     .botonesNav{
         width: auto; 
         min-width: 80px; 
-        
-        
         padding: 8px 15px; 
-        
-        
         font-size: clamp(0.7rem, 2vw, 0.9rem); 
-        
-        
         display: inline-flex;
         align-items: center;
         justify-content: center;
         text-align: center;
-
-        background: linear-gradient(to right, var(--color-base), var(--color-destenido));
+        background:var(--color-base);
         padding: 12px 24px;
         border: 0;
         border-radius: 8px; 
@@ -423,17 +416,16 @@
     }
 
     .libro img {
-        max-width: 100%;      /* No permite que la imagen sea más ancha que la página */
-        max-height: 45%;     /* Limita la altura para que no desplace al texto fuera */
-        height: auto;        /* Mantiene la proporción */
-        object-fit: contain; /* Ajusta la imagen sin deformarla */
+        max-width: 100%;      
+        max-height: 45%;     
+        height: auto;        
+        object-fit: contain; 
         display: block;
-        margin: 10px auto;   /* Las centra horizontalmente */
+        margin: 10px auto;   
     }
 
 
     .registroTareas {
-        /*background: var(--color-fondo-tareas);*/
         padding: 20px;
         border-radius: 10px;
         border-bottom: 3px var(--color-borde-tareas);
@@ -664,7 +656,7 @@
             
         }
         aside {
-            width: 100%;            /* Ocupa todo el ancho disponible */
+            width: 100%;            
             position: relative;
             top: 20px;
             margin-bottom: 35px;
@@ -673,16 +665,16 @@
         }
         .liStyle {
             width: 100%;
-            margin-top: 2px; /* Espacio entre botones */
+            margin-top: 2px;
             display: flex;
         }
 
         .botonesAside {
-            width: 100%;            /* El botón llena el ancho de la columna */
-            height: 100%;           /* Para que todos midan lo mismo si el texto varía */
+            width: 100%;            
+            height: 100%;           
             display: flex;
             align-items: center;
-            justify-content: center; /* Centramos el contenido para que se vea equilibrado */
+            justify-content: center; 
             
             font-size: 0.8rem;
             box-sizing: border-box;
@@ -690,19 +682,17 @@
         }
         .contenedorBotones {
             display: grid;
-            /* FR significa "fracción del espacio disponible". 
-            1fr 1fr crea dos columnas que se reparten TODO el ancho al 50% cada una */
             grid-template-columns: 1fr 1fr; 
-            gap: 10px;              /* Espacio entre botones */
-            width: 100%;            /* Se expande a la derecha */
-            max-width: 100%;        /* IMPORTANTE: Eliminamos el 50% o 90% previo */
-            padding: 0 15px;        /* Pequeño margen para que no toquen el borde del cristal */
+            gap: 10px;              
+            width: 100%;            
+            max-width: 100%;        
+            padding: 0 15px;        
             margin: 0;
             list-style: none;
             box-sizing: border-box;
         }
         .imagenesAside {
-            width: 20px;            /* Reducimos un poco la imagen para que quepa bien en 2 col */
+            width: 20px;            
             margin-right: 5px;
         }
         .imgLibro{
