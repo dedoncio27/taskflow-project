@@ -5,7 +5,7 @@ const path = require('path');
 
 const FILE_PATH = path.join(__dirname, '../../data/tasks.json');
 
-// Intentar asegurar que el directorio de datos existe (fallará en Vercel, pero lo ignoramos)
+
 try {
   if (!fs.existsSync(path.dirname(FILE_PATH))) {
     fs.mkdirSync(path.dirname(FILE_PATH), { recursive: true });
@@ -19,18 +19,18 @@ function generarId() {
 }
 
 const DEFAULT_TASKS = [
-  { id: generarId(), titulo: "Leer capitulo Zeus", prioridad: "alta", recordatorio: null, completada: false, creadaEn: new Date().toISOString() },
-  { id: generarId(), titulo: "Leer capitulo Hera", prioridad: "alta", recordatorio: null, completada: false, creadaEn: new Date().toISOString() },
-  { id: generarId(), titulo: "Leer capitulo Poseidón", prioridad: "alta", recordatorio: null, completada: false, creadaEn: new Date().toISOString() },
-  { id: generarId(), titulo: "Leer capitulo Apolo", prioridad: "alta", recordatorio: null, completada: false, creadaEn: new Date().toISOString() },
-  { id: generarId(), titulo: "Leer capitulo Demeter", prioridad: "alta", recordatorio: null, completada: false, creadaEn: new Date().toISOString() },
-  { id: generarId(), titulo: "Leer capitulo Artemisa", prioridad: "alta", recordatorio: null, completada: false, creadaEn: new Date().toISOString() },
-  { id: generarId(), titulo: "Leer capitulo Ares", prioridad: "alta", recordatorio: null, completada: false, creadaEn: new Date().toISOString() },
-  { id: generarId(), titulo: "Leer capitulo Hermes", prioridad: "alta", recordatorio: null, completada: false, creadaEn: new Date().toISOString() },
-  { id: generarId(), titulo: "Leer capitulo Atenea", prioridad: "alta", recordatorio: null, completada: false, creadaEn: new Date().toISOString() },
-  { id: generarId(), titulo: "Leer capitulo Afrodita", prioridad: "alta", recordatorio: null, completada: false, creadaEn: new Date().toISOString() },
-  { id: generarId(), titulo: "Leer capitulo Hefesto", prioridad: "alta", recordatorio: null, completada: false, creadaEn: new Date().toISOString() },
-  { id: generarId(), titulo: "Leer capitulo Hestía", prioridad: "alta", recordatorio: null, completada: false, creadaEn: new Date().toISOString() },
+  { id: "default-zeus", titulo: "Leer capitulo Zeus", prioridad: "alta", recordatorio: null, completada: false, creadaEn: new Date().toISOString() },
+  { id: "default-hera", titulo: "Leer capitulo Hera", prioridad: "alta", recordatorio: null, completada: false, creadaEn: new Date().toISOString() },
+  { id: "default-poseidon", titulo: "Leer capitulo Poseidón", prioridad: "alta", recordatorio: null, completada: false, creadaEn: new Date().toISOString() },
+  { id: "default-apolo", titulo: "Leer capitulo Apolo", prioridad: "alta", recordatorio: null, completada: false, creadaEn: new Date().toISOString() },
+  { id: "default-demeter", titulo: "Leer capitulo Demeter", prioridad: "alta", recordatorio: null, completada: false, creadaEn: new Date().toISOString() },
+  { id: "default-artemisa", titulo: "Leer capitulo Artemisa", prioridad: "alta", recordatorio: null, completada: false, creadaEn: new Date().toISOString() },
+  { id: "default-ares", titulo: "Leer capitulo Ares", prioridad: "alta", recordatorio: null, completada: false, creadaEn: new Date().toISOString() },
+  { id: "default-hermes", titulo: "Leer capitulo Hermes", prioridad: "alta", recordatorio: null, completada: false, creadaEn: new Date().toISOString() },
+  { id: "default-atenea", titulo: "Leer capitulo Atenea", prioridad: "alta", recordatorio: null, completada: false, creadaEn: new Date().toISOString() },
+  { id: "default-afrodita", titulo: "Leer capitulo Afrodita", prioridad: "alta", recordatorio: null, completada: false, creadaEn: new Date().toISOString() },
+  { id: "default-hefesto", titulo: "Leer capitulo Hefesto", prioridad: "alta", recordatorio: null, completada: false, creadaEn: new Date().toISOString() },
+  { id: "default-hestia", titulo: "Leer capitulo Hestía", prioridad: "alta", recordatorio: null, completada: false, creadaEn: new Date().toISOString() },
 ];
 
 function cargarTareas() {
@@ -51,8 +51,6 @@ function guardarTareas(lista) {
   try {
     fs.writeFileSync(FILE_PATH, JSON.stringify(lista, null, 2));
   } catch (err) {
-    // En Vercel no se puede escribir, así que solo avisamos en el log.
-    // Los cambios seguirán funcionando en memoria mientras la instancia esté viva.
     console.warn('[Service] No se pudo persistir en disco (Vercel read-only):', err.message);
   }
 }
