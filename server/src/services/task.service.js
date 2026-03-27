@@ -5,9 +5,13 @@ const path = require('path');
 
 const FILE_PATH = path.join(__dirname, '../../data/tasks.json');
 
-// Asegurar que el directorio de datos existe
-if (!fs.existsSync(path.dirname(FILE_PATH))) {
-  fs.mkdirSync(path.dirname(FILE_PATH), { recursive: true });
+// Intentar asegurar que el directorio de datos existe (fallará en Vercel, pero lo ignoramos)
+try {
+  if (!fs.existsSync(path.dirname(FILE_PATH))) {
+    fs.mkdirSync(path.dirname(FILE_PATH), { recursive: true });
+  }
+} catch (err) {
+  console.warn('[Service] No se pudo crear el directorio de datos (esto es normal en Vercel):', err.message);
 }
 
 function generarId() {
@@ -44,7 +48,13 @@ function cargarTareas() {
 }
 
 function guardarTareas(lista) {
-  fs.writeFileSync(FILE_PATH, JSON.stringify(lista, null, 2));
+  try {
+    fs.writeFileSync(FILE_PATH, JSON.stringify(lista, null, 2));
+  } catch (err) {
+    // En Vercel no se puede escribir, así que solo avisamos en el log.
+    // Los cambios seguirán funcionando en memoria mientras la instancia esté viva.
+    console.warn('[Service] No se pudo persistir en disco (Vercel read-only):', err.message);
+  }
 }
 
 let tasks = cargarTareas();
