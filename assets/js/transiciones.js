@@ -29,7 +29,7 @@ function irAPagina(destino) {
 
     /* Aplica la transición de flip a las páginas */
     misPaginas.forEach((p, i) => {
-        const delay = Math.abs(i - destino) * 30; 
+        const delay = Math.abs(i - destino) * 30;
 
         const t = setTimeout(() => {
             if (token !== navToken) return;
@@ -66,9 +66,9 @@ const navegacion = [
 navegacion.forEach(([id, destino]) => {
     const link = document.getElementById(id);
     if (!link) return;
-    
+
     link.addEventListener('click', (e) => {
-        e.preventDefault(); // IMPRESCINDIBLE: Evita que el enlace recargue la página
+        e.preventDefault();
         irAPagina(destino);
     });
 });
@@ -85,15 +85,14 @@ if (btnDark) {
         btnDark.setAttribute('aria-pressed', String(dark));
         btnDark.textContent = dark ? "Modo claro☀️" : "Modo oscuro🌙";
     };
-    /* Carga el tema guardado en el localStorage */
+
     const guardado = localStorage.getItem('theme');
     if (guardado === 'dark' || guardado === 'light') aplicarTheme(guardado);
     else aplicarTheme(root.classList.contains('dark') ? 'dark' : 'light');
-    /* Cambia el tema al hacer click en el botón */
+
     btnDark.addEventListener('click', () => {
         const next = root.classList.contains('dark') ? 'light' : 'dark';
         localStorage.setItem('theme', next);
         aplicarTheme(next);
     });
 }
-

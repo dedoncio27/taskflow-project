@@ -1,0 +1,29 @@
+# Dependency directories
+node_modules/
+
+# Local env files
+.env
+.env.local
+.env.*.local
+
+# Documentation
+EXPLICACION_TECNICA.md
+
+# Build outputs
+# En el caso de output.css, si no usas un build automatizado en Vercel, deberías borrar esta línea.
+# assets/css/output.css
+dist/
+build/
+
+# Vercel
+.vercel
+
+# IDEs
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# OS files
+.DS_Store
+Thumbs.db
